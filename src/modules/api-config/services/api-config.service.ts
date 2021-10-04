@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { MongooseModuleOptions } from '@nestjs/mongoose';
-import { ApiConfig } from '../api-config.types';
+import { ApiConfig, JwtConfig } from '../api-config.types';
 
 @Injectable()
 export class ApiConfigService {
@@ -14,6 +14,13 @@ export class ApiConfigService {
       port: this.configService.get<number>('API_PORT')
     };
   }
+
+  get authConfig(): JwtConfig {
+    return {
+      jwtSecretKey: this.configService.get<string>('JWT_SECRET'),
+    };
+  }
+
   get mongoConnection(): MongooseModuleOptions {
     const host = this.configService.get('MONGO_HOST');
     const port = this.configService.get('MONGO_PORT');

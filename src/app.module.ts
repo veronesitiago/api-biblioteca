@@ -4,6 +4,8 @@ import { ApiConfigModule } from './modules/api-config/api-config.module';
 import { ApiConfigService } from './modules/api-config/services';
 import { LivrosModule } from './modules/livros/livros.module';
 import { OpiniaoModule } from './modules/opiniao/opiniao.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { UsuariosModule } from './modules/usuarios/usuarios.module';
 
 @Module({
   imports: [
@@ -14,6 +16,8 @@ import { OpiniaoModule } from './modules/opiniao/opiniao.module';
     }),
     LivrosModule,
     OpiniaoModule,
+    AuthModule,
+    UsuariosModule,
   ],
   controllers: [],
   providers: [],

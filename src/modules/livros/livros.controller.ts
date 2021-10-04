@@ -1,9 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CriarLivroDto } from './dtos/criar-livro.dto';
 import { Livro } from './interface/livro.interface';
 import { LivrosService } from './services/livros.service';
 import { ValidacaoParametrosPipe } from '../../common/pipes/validacao-parametros.pipe';
-
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 @Controller('api/v1/livros')
 export class LivrosController {
 
@@ -22,6 +22,7 @@ export class LivrosController {
     return await this.service.obterLivro(_isbn_10);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   @UsePipes(ValidationPipe)
   async criarAtualizarLivro(
@@ -30,6 +31,7 @@ export class LivrosController {
     return await this.service.criarAtualizarLivro(criarLivroDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete('/:_isbn_10')
   async deletarLivro(
     @Param('_isbn_10', ValidacaoParametrosPipe) _isbn_10: string): Promise<void> {
