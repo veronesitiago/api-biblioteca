@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CriarLivroDto } from '../dtos/criar-livro.dto';
@@ -17,8 +17,15 @@ export class LivrosService {
     return await this.livroModel.find().exec();
   }
 
+  async obterLivro(isbn_10: string): Promise <Livro> {
+    const livroEncontrado = await this.livroModel.findOne({ isbn_10 }).exec();
+    if (!livroEncontrado) {
+      throw new NotFoundException(`Livro com isbn10: '${isbn_10}' não encontrado.`);
+    }
+    return livroEncontrado;
+  }
+
   async criarAtualizarLivro(criarLivroDto: CriarLivroDto) {
-    this.logger.log(`criarAtualizarLivro: ${JSON.stringify(criarLivroDto)}`);
 
     const livroExiste = await this.livroModel.findOne(
       {
@@ -30,7 +37,6 @@ export class LivrosService {
       return await this.livroModel.findOneAndUpdate({ isbn_10: criarLivroDto.isbn_10}, {$set: criarLivroDto}).exec();
     } else {
       const criarLivro = new this.livroModel(criarLivroDto);
-      this.logger.log(`objetoModel: ${JSON.stringify(criarLivro.save())}`);
       return await criarLivro.save();
     }
 

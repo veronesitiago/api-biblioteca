@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CriarLivroDto } from './dtos/criar-livro.dto';
 import { Livro } from './interface/livro.interface';
 import { LivrosService } from './services/livros.service';
+import { ValidacaoParametrosPipe } from '../../common/pipes/validacao-parametros.pipe';
 
 @Controller('api/v1/livros')
 export class LivrosController {
@@ -14,6 +15,12 @@ export class LivrosController {
   async obterTodosLivros(): Promise<Array<Livro>> {
     return await this.service.obterTodosLivros();
   };
+
+  @Get('/:isbn_10')
+  async obterLivro(
+    @Param('isbn_10', ValidacaoParametrosPipe) isbn_10: string): Promise<Livro> {
+    return await this.service.obterLivro(isbn_10);
+  }
 
   @Post()
   @UsePipes(ValidationPipe)
