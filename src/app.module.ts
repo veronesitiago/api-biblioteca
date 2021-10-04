@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ApiConfigModule } from './modules/api-config/api-config.module';
 import { ApiConfigService } from './modules/api-config/services';
 import { LivrosModule } from './modules/livros/livros.module';
+import { OpiniaoModule } from './modules/opiniao/opiniao.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { LivrosModule } from './modules/livros/livros.module';
       useFactory: ({ mongoConnection }: ApiConfigService) => mongoConnection,
     }),
     LivrosModule,
+    OpiniaoModule,
   ],
   controllers: [],
   providers: [],

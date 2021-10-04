@@ -9,7 +9,7 @@ export class LivrosService {
   private readonly logger = new Logger(LivrosService.name);
 
   constructor(
-    @InjectModel('Livros')
+    @InjectModel('Livro')
     private readonly livroModel: Model<Livro>
   ){}
 

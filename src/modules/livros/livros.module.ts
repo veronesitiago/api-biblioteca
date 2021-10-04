@@ -7,10 +7,11 @@ import { LivrosSchema } from './schemas/livros.schema';
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: 'Livros', schema: LivrosSchema}
+      { name: 'Livro', schema: LivrosSchema}
     ])
   ],
   controllers: [LivrosController],
-  providers: [LivrosService]
+  providers: [LivrosService],
+  exports: [LivrosService]
 })
 export class LivrosModule {}
