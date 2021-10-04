@@ -5,7 +5,6 @@ Sistema simples que tem o objetivo de registrar/alterar e/ou excluir livros, e r
 <p>Existe um nível de acesso:</p>
 <ol>
     <li>Administradores (Para manutenção dos cadastros de livros)</li>
-    <li>Usuários, para registro de opiniões</li>
 </ol>
 
 ## Como instalar e rodar?
