@@ -17,10 +17,10 @@ export class LivrosService {
     return await this.livroModel.find().exec();
   }
 
-  async obterLivro(isbn_10: string): Promise <Livro> {
-    const livroEncontrado = await this.livroModel.findOne({ isbn_10 }).exec();
+  async obterLivro(_isbn_10: string): Promise <Livro> {
+    const livroEncontrado = await this.livroModel.findOne({ _isbn_10 }).exec();
     if (!livroEncontrado) {
-      throw new NotFoundException(`Livro com isbn10: '${isbn_10}' não encontrado.`);
+      throw new NotFoundException(`Livro com isbn10: '${_isbn_10}' não encontrado.`);
     }
     return livroEncontrado;
   }
@@ -39,8 +39,16 @@ export class LivrosService {
       const criarLivro = new this.livroModel(criarLivroDto);
       return await criarLivro.save();
     }
+  }
 
+  async deletarLivro(_isbn_10: string): Promise<any> {
+    const livroEncontrado = await this.livroModel.find({ _isbn_10 }).exec();
 
+    if (!livroEncontrado) {
+      throw new NotFoundException(`Livro com isbn10: '${_isbn_10}' não encontrado.`);
+    }
+
+    return await this.livroModel.deleteOne({ isbn_10: _isbn_10}).exec();
   }
 
 }

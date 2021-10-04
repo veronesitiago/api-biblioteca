@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CriarLivroDto } from './dtos/criar-livro.dto';
 import { Livro } from './interface/livro.interface';
 import { LivrosService } from './services/livros.service';
@@ -16,10 +16,10 @@ export class LivrosController {
     return await this.service.obterTodosLivros();
   };
 
-  @Get('/:isbn_10')
+  @Get('/:_isbn_10')
   async obterLivro(
-    @Param('isbn_10', ValidacaoParametrosPipe) isbn_10: string): Promise<Livro> {
-    return await this.service.obterLivro(isbn_10);
+    @Param('_isbn_10', ValidacaoParametrosPipe) _isbn_10: string): Promise<Livro> {
+    return await this.service.obterLivro(_isbn_10);
   }
 
   @Post()
@@ -28,5 +28,11 @@ export class LivrosController {
     @Body() criarLivroDto: CriarLivroDto,
   ): Promise<Livro> {
     return await this.service.criarAtualizarLivro(criarLivroDto);
+  }
+
+  @Delete('/:_isbn_10')
+  async deletarLivro(
+    @Param('_isbn_10', ValidacaoParametrosPipe) _isbn_10: string): Promise<void> {
+    this.service.deletarLivro(_isbn_10);
   }
 }
